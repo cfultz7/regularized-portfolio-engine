@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.9"
+      - name: Install Python 3.12
+        run: uv python install 3.12
+      - name: Install locked dependencies
+        run: uv sync --locked
+      - name: requirements.txt matches uv.lock
+        shell: bash
+        run: uv export --no-dev --no-hashes --format requirements-txt --no-header | diff --strip-trailing-cr - requirements.txt
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format check
+        run: uv run ruff format --check .
+      - name: Type check (engine modules)
+        run: uv run mypy
+      - name: Tests (offline)
+        run: uv run pytest -q
+      - name: CLI smoke - synthetic demo (offline)
+        run: uv run rpo demo --output-dir ci-outputs
+      - name: CLI smoke - report regeneration
+        run: uv run rpo report --run latest --output-dir ci-outputs
+      - name: Dashboard startup smoke
+        run: uv run python scripts/smoke_dashboard.py --output-dir ci-outputs
+      - name: Upload synthetic demo outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-outputs-${{ matrix.os }}
+          path: ci-outputs/
+          retention-days: 7

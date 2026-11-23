@@ -1,0 +1,25 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+
+# Provider data: reproduce with `rpo fetch` (SHA-256 recorded in run manifests); never committed
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Generated runs (selected figures are copied to docs/assets/)
+outputs/*
+!outputs/.gitkeep
+ci-outputs/
+
+# Local editor files
+.DS_Store
+Thumbs.db

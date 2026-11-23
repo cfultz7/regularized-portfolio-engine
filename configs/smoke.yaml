@@ -1,0 +1,43 @@
+# SYNTHETIC smoke/demo configuration: deterministic one-factor Gaussian panel, offline, ~1 minute.
+# Every output of this configuration is labeled SYNTHETIC and is not market evidence.
+run_name: demo_synthetic
+synthetic_label: true
+default_preset: core
+output_dir: outputs
+
+data:
+  source: synthetic
+  start: 2000-01-01
+  end: 2007-12-31
+  expected_assets: 8
+  synthetic: {n_assets: 8, start: 2000-01-03, end: 2007-12-31, seed: 20240101}
+
+portfolio:
+  initial_nav: 1000000
+  lookback: 126
+  gamma: 5.0
+  horizon: 21
+  rho: 0.75
+  max_weight: 0.25
+  cost_bps: 10
+
+splits:
+  simulation_start: 2001-01-01
+  headline: final
+  splits:
+    - {name: development, start: 2001-01-01, end: 2003-12-31}
+    - {name: validation,  start: 2004-01-01, end: 2005-12-31}
+    - {name: final,       start: 2006-01-01, end: 2007-12-31}
+
+experiments:
+  cost_bps: [0, 5, 10, 25]
+  lookback: [63, 126, 252]
+  rho: [0.0, 0.5, 0.75, 1.0]
+  gamma: [1.0, 5.0, 10.0]
+  frontier_points: 8
+  bootstrap: {block_length: 20, replications: 200, seed: 20090301}
+  stress: {history: 504, horizon: 63, block_length: 10, paths: 200, seed: 6302025}
+  simulation:
+    base_seed: 1729
+    core: {n_assets: [8], lengths: [63, 126], replications: 10}
+    full: {n_assets: [8], lengths: [63, 126, 252], replications: 20}

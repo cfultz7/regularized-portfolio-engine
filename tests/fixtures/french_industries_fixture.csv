@@ -1,0 +1,24 @@
+SYNTHETIC TEST FIXTURE - mimics the layout of a Kenneth French daily industry file; values are invented.
+It contains value- and equal-weighted returns for 3 industry portfolios.
+
+Missing data are indicated by -99.99 or -999.
+
+
+  Average Value Weighted Returns -- Daily
+,Food,Beer,Smoke
+20241230,   1.00,  -0.50,   0.25
+20241231,   0.10,   0.20,  -99.99
+20250102,  -1.25,   2.00,   0.50
+20250103,   0.40,  -0.10,   0.30
+20260102,   9.00,   9.00,   9.00
+
+
+  Average Equal Weighted Returns -- Daily
+,Food,Beer,Smoke
+20241230,  50.00,  50.00,  50.00
+20241231,  50.00,  50.00,  50.00
+20250102,  50.00,  50.00,  50.00
+20250103,  50.00,  50.00,  50.00
+20260102,  50.00,  50.00,  50.00
+
+Copyright SYNTHETIC FIXTURE

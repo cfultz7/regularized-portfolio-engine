@@ -1,0 +1,69 @@
+[project]
+name = "regularized-portfolio-engine"
+version = "0.1.0"
+description = "Regularized portfolio optimization engine comparing monthly 1/N with constrained, shrinkage-based and cost-aware Markowitz allocations on academic industry return portfolios."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Chantry Fultz" }]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "scipy>=1.13",
+    "scikit-learn>=1.5",
+    "cvxpy>=1.5",
+    "clarabel>=0.9",
+    "pyarrow>=16",
+    "pydantic>=2.7",
+    "typer>=0.12",
+    "pyyaml>=6.0",
+    "streamlit>=1.38",
+    "plotly>=5.22",
+    "matplotlib>=3.9",
+    "reportlab>=4.2",
+]
+
+[project.scripts]
+rpo = "portfolio_engine.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.2",
+    "ruff>=0.6",
+    "mypy>=1.10",
+    "pandas-stubs",
+    "types-PyYAML",
+    "pypdfium2>=5.15.2",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/portfolio_engine"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests", "app", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY", "PTH", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "RUF005", "E501", "PTH105", "PTH109"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["slow: longer numerical tests (still offline)"]
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src/portfolio_engine"]
+exclude = ["src/portfolio_engine/reporting.py"]
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+warn_unused_ignores = false
+check_untyped_defs = false
+disallow_untyped_defs = false
+disallow_incomplete_defs = true

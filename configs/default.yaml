@@ -1,0 +1,61 @@
+# Frozen primary experiment (specification section 4). Paths are relative to the repository root.
+run_name: default
+default_preset: core
+output_dir: outputs
+
+data:
+  source: french
+  cache_dir: data/raw
+  processed_dir: data/processed
+  start: 1985-01-01          # 1985-1989 available for estimation warmup
+  end: 2025-12-31            # 2026 observations are excluded even if downloaded
+  expected_assets: 30
+  missing_policy: error      # never forward-fill or zero-fill returns
+  large_return_threshold: 0.25
+  french:
+    industries_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/30_Industry_Portfolios_daily_CSV.zip
+    factors_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip
+    definitions_url: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Siccodes30.zip
+    section: "Average Value Weighted Returns -- Daily"
+    rf_column: RF
+
+portfolio:
+  initial_nav: 1000000
+  lookback: 252              # trailing daily observations through the signal date
+  gamma: 5.0                 # risk aversion (design choice)
+  horizon: 21                # holding-horizon approximation H (trading days)
+  rho: 0.75                  # fixed mean shrinkage (design choice)
+  max_weight: 0.10
+  cost_bps: 10               # one-way, per dollar bought or sold
+  rebalance: month_end
+  execution_lag: 1           # execute at the next trading date's close
+
+solver:
+  order: [CLARABEL, OSQP, SCS]
+  feasibility_tol: 1.0e-6
+  psd_repair_rel_tol: 1.0e-10
+
+splits:
+  simulation_start: 1990-01-01
+  headline: final
+  splits:
+    - {name: development, start: 1990-01-01, end: 2004-12-31}
+    - {name: validation,  start: 2005-01-01, end: 2014-12-31}
+    - {name: final,       start: 2015-01-01, end: 2025-12-31}
+
+experiments:
+  cost_bps: [0, 5, 10, 25]
+  lookback: [126, 252, 504]
+  rho: [0.0, 0.5, 0.75, 1.0]
+  gamma: [1.0, 5.0, 10.0]
+  frontier_points: 15
+  bootstrap: {block_length: 20, replications: 1000, seed: 20090301, confidence: 0.95, exploratory_block_lengths: [10, 40]}
+  stress: {history: 1260, horizon: 63, block_length: 10, paths: 1000, seed: 6302025}
+  simulation:
+    base_seed: 1729
+    cap_multiple: 3.0        # max weight 3/N (10% at N=30)
+    gamma: 5.0
+    horizon: 21
+    rho: 0.75
+    core: {n_assets: [30], lengths: [126, 252, 504], replications: 100}
+    full: {n_assets: [10, 30, 60], lengths: [126, 252, 504], replications: 200}
