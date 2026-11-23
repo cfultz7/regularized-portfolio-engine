@@ -11,7 +11,7 @@ with next-close execution and an exact self-financing cost ledger, and explains 
 performance, allocations and estimation diagnostics. It is an engineering project with an empirical
 analysis. It does not claim a new return signal or a replication of DeMiguel, Garlappi and Uppal (2009).
 
-![Overview: net growth, drawdowns, and findings from run 20261121T072546Z_default_a2d5acfe](docs/assets/01_overview.png)
+![Overview: net growth, drawdowns, and findings from run 20261123T233332Z_default_a2d5acfe](docs/assets/01_overview.png)
 
 ## Data and universe
 
@@ -43,7 +43,7 @@ COST_AWARE_REG_MV anticipates costs in its objective.**
 | COST_AWARE_REG_MV | as above | Ledoit-Wolf | **yes** |
 | LW_MINVAR | none (minimum variance) | Ledoit-Wolf | no |
 
-## Key findings (run `20261121T072546Z_default_a2d5acfe`, final split 2015-01-01 to 2025-12-31)
+## Key findings (run `20261123T233332Z_default_a2d5acfe`, final split 2015-01-01 to 2025-12-31)
 
 The design was frozen in `design_freeze.json` before any backtest ran. The 2015-2025 data were
 public beforehand, so the final period is not "unseen" in a prospective sense.
@@ -204,7 +204,7 @@ dependencies (no compilers), and a standard-library dashboard smoke script.
   formulas with split anchors, seeded reproducibility, the immutable design freeze, report/table
   agreement, and dashboard rendering.
 * Measured wall time on this machine (Apple M4, 10 cores, 16 GB): core
-  reproduce 27.0 s; full reproduce 61.1 s (manifest `timings`).
+  reproduce 26.4 s; full reproduce 58.8 s (manifest `timings`).
 * The primary run had 2,165 optimizer solves, all `optimal` with Clarabel, and 0 solver failures.
   The final 2025-12-31 signal of each method is recorded as a pending proposal.
 

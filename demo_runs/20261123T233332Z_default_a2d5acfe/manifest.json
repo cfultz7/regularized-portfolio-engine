@@ -1,0 +1,952 @@
+{
+  "schema_version": "1.0",
+  "run_status": "completed",
+  "created_utc": "2026-11-23T23:33:32+00:00",
+  "experiments": {
+    "data_validation": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:33+00:00",
+      "wall_time_s": 0.253
+    },
+    "design_freeze": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:33+00:00",
+      "wall_time_s": 0.026
+    },
+    "primary_backtest": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:37+00:00",
+      "wall_time_s": 4.033
+    },
+    "metrics": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:37+00:00",
+      "wall_time_s": 0.052
+    },
+    "sensitivity": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:51+00:00",
+      "wall_time_s": 14.543
+    },
+    "bootstrap": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:52+00:00",
+      "wall_time_s": 0.193
+    },
+    "stress_view": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:52+00:00",
+      "details": {
+        "signal_date": "2025-11-28",
+        "execution_date": "2025-12-01",
+        "history_requested": 1260,
+        "history_used": 1260,
+        "history_limitation": null,
+        "horizon_days": 63,
+        "block_length": 10,
+        "paths": 1000,
+        "seed": 6302025,
+        "assumptions": "Asset returns resampled in moving blocks from history through the signal date only; posttrade weights drift with no further trades and no fees; starting wealth 1. Scenario summaries, not calibrated crash probabilities or prediction intervals."
+      },
+      "wall_time_s": 0.024
+    },
+    "frontier_snapshot": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:52+00:00",
+      "wall_time_s": 0.037
+    },
+    "simulation": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:56+00:00",
+      "preset": "core",
+      "cells": 9,
+      "replications_per_cell": 100,
+      "n_assets": [
+        30
+      ],
+      "lengths": [
+        126,
+        252,
+        504
+      ],
+      "base_seed": 1729,
+      "cap_rule": "3.0/N",
+      "cost_aware_note": "COST_AWARE_REG_MV omitted: identical to MEAN_COV_SHRINK_MV at zero cost",
+      "wall_time_s": 4.002
+    },
+    "reports": {
+      "status": "completed",
+      "updated_utc": "2026-11-23T23:33:59+00:00",
+      "wall_time_s": 2.643
+    }
+  },
+  "tables": {
+    "daily_results": {
+      "file": "tables/daily_results.parquet",
+      "rows": 54408,
+      "description": "Daily pre/post-cost NAV, gross policy and net returns, RF, fees, turnover, concentration, and event flags per strategy.",
+      "columns": {
+        "date": "datetime64[us]",
+        "strategy": "str",
+        "scenario": "str",
+        "nav_pre": "float64",
+        "nav_post": "float64",
+        "nav_before_fees": "float64",
+        "gross_return": "float64",
+        "net_return": "float64",
+        "fee": "float64",
+        "gross_traded": "float64",
+        "turnover_gross": "float64",
+        "cash_weight": "float64",
+        "hhi": "float64",
+        "max_weight": "float64",
+        "rf": "float64",
+        "turnover_half": "float64",
+        "effective_n": "float64",
+        "drift_cap_exceedances": "int64",
+        "is_anchor": "bool",
+        "is_signal": "bool",
+        "is_execution": "bool",
+        "is_initial_deployment": "bool",
+        "event_status": "str"
+      }
+    },
+    "weights": {
+      "file": "tables/weights.parquet",
+      "rows": 311400,
+      "description": "Long-format weights: signal_holding (drifted at signal close), target (frozen), exec_pretrade, exec_posttrade.",
+      "columns": {
+        "date": "datetime64[us]",
+        "signal_date": "datetime64[us]",
+        "strategy": "str",
+        "asset": "str",
+        "weight_type": "str",
+        "value": "float64",
+        "scenario": "str"
+      }
+    },
+    "rebalance_events": {
+      "file": "tables/rebalance_events.parquet",
+      "rows": 2598,
+      "description": "One row per strategy and signal: dates, status, planned vs realized trade fraction and cost, NAV, solver diagnostics, residuals, forecast vs realized risk.",
+      "columns": {
+        "strategy": "str",
+        "scenario": "str",
+        "signal_date": "datetime64[us]",
+        "execution_date": "datetime64[us]",
+        "status": "str",
+        "solver": "str",
+        "solver_status": "str",
+        "objective": "float64",
+        "solve_time_s": "float64",
+        "residual_budget": "float64",
+        "residual_lower": "float64",
+        "residual_upper": "float64",
+        "residual_max": "float64",
+        "cleanup_adjustment": "float64",
+        "solver_attempts": "str",
+        "nav_signal": "float64",
+        "signal_cash_weight": "float64",
+        "target_cap_hits": "int64",
+        "feasibility_violation": "bool",
+        "is_initial_deployment": "bool",
+        "planned_trade_fraction": "float64",
+        "planned_half_turnover": "float64",
+        "planned_cost_fraction": "float64",
+        "forecast_vol_lw_ann": "float64",
+        "forecast_vol_sample_ann": "float64",
+        "target_hhi": "float64",
+        "target_effective_n": "float64",
+        "target_max_weight": "float64",
+        "nav_pre_exec": "float64",
+        "nav_post_exec": "float64",
+        "fee": "float64",
+        "realized_trade_fraction": "float64",
+        "realized_half_turnover": "float64",
+        "realized_cost_fraction": "float64",
+        "cost_fraction_p": "float64",
+        "exec_drift_from_signal": "float64",
+        "realized_vol_ann": "float64",
+        "holding_days": "float64"
+      }
+    },
+    "notional_reallocations": {
+      "file": "tables/notional_reallocations.csv",
+      "rows": 77760,
+      "description": "Per execution and asset: pretrade and posttrade hypothetical dollars and the signed change.",
+      "columns": {
+        "interpretation": "str",
+        "signal_date": "datetime64[us]",
+        "execution_date": "datetime64[us]",
+        "strategy": "str",
+        "asset": "str",
+        "pretrade_dollars": "float64",
+        "posttrade_dollars": "float64",
+        "change_dollars": "float64",
+        "scenario": "str"
+      }
+    },
+    "estimation_diagnostics": {
+      "file": "tables/estimation_diagnostics.parquet",
+      "rows": 433,
+      "description": "Per signal date: Ledoit-Wolf alpha (covariance shrinkage), fixed rho (mean shrinkage), eigenvalue and condition diagnostics.",
+      "columns": {
+        "signal_date": "datetime64[us]",
+        "lookback": "int64",
+        "window_start": "datetime64[us]",
+        "window_end": "datetime64[us]",
+        "n_obs": "int64",
+        "lw_alpha": "float64",
+        "rho": "float64",
+        "mu_sample_xs_mean": "float64",
+        "mu_sample_xs_std": "float64",
+        "mu_shrunk_xs_std": "float64",
+        "trace_sample": "float64",
+        "min_eig_sample": "float64",
+        "max_eig_sample": "float64",
+        "cond_sample": "float64",
+        "min_eig_lw": "float64",
+        "max_eig_lw": "float64",
+        "cond_lw": "float64",
+        "sample_repaired": "bool",
+        "lw_repaired": "bool",
+        "avg_correlation": "float64",
+        "notes": "str"
+      }
+    },
+    "estimation_vectors": {
+      "file": "tables/estimation_vectors.parquet",
+      "rows": 12990,
+      "description": "Per signal date and asset: sample and shrunk daily mean forecasts; eigenvalues (descending) of sample and LW covariance.",
+      "columns": {
+        "signal_date": "datetime64[us]",
+        "asset": "str",
+        "rank": "int64",
+        "mu_sample": "float64",
+        "mu_shrunk": "float64",
+        "eig_sample_desc": "float64",
+        "eig_lw_desc": "float64"
+      }
+    },
+    "covariance_matrices": {
+      "file": "tables/covariance_matrices.parquet",
+      "rows": 25980,
+      "description": "Per signal date: sample and Ledoit-Wolf daily covariance matrices (row asset x asset columns).",
+      "columns": {
+        "signal_date": "datetime64[us]",
+        "kind": "str",
+        "asset": "str",
+        "Food": "float64",
+        "Beer": "float64",
+        "Smoke": "float64",
+        "Games": "float64",
+        "Books": "float64",
+        "Hshld": "float64",
+        "Clths": "float64",
+        "Hlth": "float64",
+        "Chems": "float64",
+        "Txtls": "float64",
+        "Cnstr": "float64",
+        "Steel": "float64",
+        "FabPr": "float64",
+        "ElcEq": "float64",
+        "Autos": "float64",
+        "Carry": "float64",
+        "Mines": "float64",
+        "Coal": "float64",
+        "Oil": "float64",
+        "Util": "float64",
+        "Telcm": "float64",
+        "Servs": "float64",
+        "BusEq": "float64",
+        "Paper": "float64",
+        "Trans": "float64",
+        "Whlsl": "float64",
+        "Rtail": "float64",
+        "Meals": "float64",
+        "Fin": "float64",
+        "Other": "float64"
+      }
+    },
+    "metrics": {
+      "file": "tables/metrics.csv",
+      "rows": 18,
+      "description": "Summary statistics per strategy, split, and scenario (primary run; sweeps in sensitivity_results).",
+      "columns": {
+        "strategy": "str",
+        "scenario": "str",
+        "split": "str",
+        "split_start": "object",
+        "split_end": "object",
+        "anchor_date": "object",
+        "anchor_nav": "float64",
+        "n_days": "int64",
+        "end_nav": "float64",
+        "total_return": "float64",
+        "net_cagr": "float64",
+        "gross_cagr_before_fees": "float64",
+        "ann_vol": "float64",
+        "sharpe": "float64",
+        "sharpe_undefined_reason": "object",
+        "sharpe_gross_before_fees": "float64",
+        "rf_cagr": "float64",
+        "max_drawdown": "float64",
+        "mdd_peak_date": "object",
+        "mdd_trough_date": "object",
+        "mdd_recovery_date": "object",
+        "avg_hhi": "float64",
+        "avg_effective_n": "float64",
+        "avg_max_weight": "float64",
+        "n_executions": "int64",
+        "recurring_half_turnover_ann": "float64",
+        "recurring_gross_turnover_ann": "float64",
+        "initial_deployment_in_split": "bool",
+        "initial_deployment_fees": "float64",
+        "total_fees": "float64",
+        "recurring_fees": "float64",
+        "fees_pct_of_anchor_nav": "float64",
+        "drift_cap_exceedance_days": "int64",
+        "n_signals": "int64",
+        "target_cap_hits": "float64",
+        "avg_target_cap_hits": "float64",
+        "solver_failures": "int64",
+        "feasibility_violations": "int64",
+        "accepted_inaccurate": "int64"
+      }
+    },
+    "sensitivity_results": {
+      "file": "tables/sensitivity_results.csv",
+      "rows": 156,
+      "description": "One-factor-at-a-time sweeps (cost, lookback, rho, gamma) around the frozen primary configuration, all splits.",
+      "columns": {
+        "sweep": "str",
+        "parameter": "str",
+        "value": "float64",
+        "is_primary": "bool",
+        "strategy": "str",
+        "scenario": "str",
+        "split": "str",
+        "split_start": "object",
+        "split_end": "object",
+        "anchor_date": "object",
+        "anchor_nav": "float64",
+        "n_days": "int64",
+        "end_nav": "float64",
+        "total_return": "float64",
+        "net_cagr": "float64",
+        "gross_cagr_before_fees": "float64",
+        "ann_vol": "float64",
+        "sharpe": "float64",
+        "sharpe_undefined_reason": "object",
+        "sharpe_gross_before_fees": "float64",
+        "rf_cagr": "float64",
+        "max_drawdown": "float64",
+        "mdd_peak_date": "object",
+        "mdd_trough_date": "object",
+        "mdd_recovery_date": "object",
+        "avg_hhi": "float64",
+        "avg_effective_n": "float64",
+        "avg_max_weight": "float64",
+        "n_executions": "int64",
+        "recurring_half_turnover_ann": "float64",
+        "recurring_gross_turnover_ann": "float64",
+        "initial_deployment_in_split": "bool",
+        "initial_deployment_fees": "float64",
+        "total_fees": "float64",
+        "recurring_fees": "float64",
+        "fees_pct_of_anchor_nav": "float64",
+        "drift_cap_exceedance_days": "int64",
+        "n_signals": "int64",
+        "target_cap_hits": "float64",
+        "avg_target_cap_hits": "float64",
+        "solver_failures": "int64",
+        "feasibility_violations": "int64",
+        "accepted_inaccurate": "int64"
+      }
+    },
+    "sensitivity_daily": {
+      "file": "tables/sensitivity_daily.parquet",
+      "rows": 471536,
+      "description": "Daily NAV/returns for every sweep scenario.",
+      "columns": {
+        "date": "datetime64[us]",
+        "strategy": "str",
+        "scenario": "str",
+        "nav_post": "float64",
+        "nav_before_fees": "float64",
+        "net_return": "float64",
+        "gross_return": "float64",
+        "rf": "float64",
+        "fee": "float64",
+        "turnover_half": "float64",
+        "sweep": "str"
+      }
+    },
+    "bootstrap_comparisons": {
+      "file": "tables/bootstrap_comparisons.csv",
+      "rows": 15,
+      "description": "Paired moving-block bootstrap intervals for Sharpe(strategy) - Sharpe(EQW), conditional on observed returns.",
+      "columns": {
+        "split": "str",
+        "strategy": "str",
+        "reference": "str",
+        "statistic": "str",
+        "observed_difference": "float64",
+        "boot_mean": "float64",
+        "boot_se": "float64",
+        "ci_low": "float64",
+        "ci_high": "float64",
+        "ci_level": "float64",
+        "interval_excludes_zero": "bool",
+        "share_boot_diff_positive": "float64",
+        "block_length": "int64",
+        "replications": "int64",
+        "seed": "int64",
+        "n_days": "int64",
+        "analysis": "str"
+      }
+    },
+    "stress_summary": {
+      "file": "tables/stress_summary.csv",
+      "rows": 6,
+      "description": "Historical block-bootstrap scenario summaries for the latest completed allocation.",
+      "columns": {
+        "strategy": "str",
+        "terminal_wealth_q05": "float64",
+        "terminal_wealth_q25": "float64",
+        "terminal_wealth_q50": "float64",
+        "terminal_wealth_q75": "float64",
+        "terminal_wealth_q95": "float64",
+        "max_drawdown_q05": "float64",
+        "max_drawdown_q25": "float64",
+        "max_drawdown_q50": "float64",
+        "max_drawdown_q75": "float64",
+        "max_drawdown_q95": "float64",
+        "share_paths_loss_gt_10pct": "float64",
+        "signal_date": "str",
+        "execution_date": "str",
+        "history_used": "int64",
+        "horizon_days": "int64",
+        "block_length": "int64",
+        "paths": "int64",
+        "seed": "int64"
+      }
+    },
+    "stress_bands": {
+      "file": "tables/stress_bands.parquet",
+      "rows": 378,
+      "description": "Per-day 5/50/95% wealth quantiles of the stress scenarios.",
+      "columns": {
+        "strategy": "str",
+        "day": "int64",
+        "q05": "float64",
+        "q50": "float64",
+        "q95": "float64"
+      }
+    },
+    "frontier_snapshot": {
+      "file": "tables/frontier_snapshot.csv",
+      "rows": 42,
+      "description": "Ex ante estimated frontier at the latest executed signal (in-sample to its window; not an out-of-sample result).",
+      "columns": {
+        "signal_date": "datetime64[us]",
+        "moments": "str",
+        "kind": "str",
+        "gamma": "float64",
+        "strategy": "str",
+        "exante_ann_return": "float64",
+        "exante_ann_vol": "float64"
+      }
+    },
+    "simulation_replications": {
+      "file": "tables/simulation_replications.parquet",
+      "rows": 4509,
+      "description": "SYNTHETIC: per-replication population metrics and weights for each method and the oracle.",
+      "columns": {
+        "case": "int64",
+        "case_name": "str",
+        "n_assets": "int64",
+        "n_obs": "int64",
+        "rep": "int64",
+        "method": "str",
+        "max_weight": "float64",
+        "status": "str",
+        "cov_rel_error_sample": "float64",
+        "cov_rel_error_lw": "float64",
+        "lw_alpha": "float64",
+        "regret": "float64",
+        "pop_ann_return": "float64",
+        "pop_ann_vol": "float64",
+        "hhi": "float64",
+        "effective_n": "float64",
+        "l1_distance_to_oracle": "float64",
+        "w00": "float64",
+        "w01": "float64",
+        "w02": "float64",
+        "w03": "float64",
+        "w04": "float64",
+        "w05": "float64",
+        "w06": "float64",
+        "w07": "float64",
+        "w08": "float64",
+        "w09": "float64",
+        "w10": "float64",
+        "w11": "float64",
+        "w12": "float64",
+        "w13": "float64",
+        "w14": "float64",
+        "w15": "float64",
+        "w16": "float64",
+        "w17": "float64",
+        "w18": "float64",
+        "w19": "float64",
+        "w20": "float64",
+        "w21": "float64",
+        "w22": "float64",
+        "w23": "float64",
+        "w24": "float64",
+        "w25": "float64",
+        "w26": "float64",
+        "w27": "float64",
+        "w28": "float64",
+        "w29": "float64"
+      }
+    },
+    "simulation_summary": {
+      "file": "tables/simulation_summary.csv",
+      "rows": 54,
+      "description": "SYNTHETIC: Monte Carlo summary by case, N, T, and method (regret vs oracle, risk, concentration, dispersion).",
+      "columns": {
+        "label": "str",
+        "case": "int64",
+        "case_name": "str",
+        "n_assets": "int64",
+        "n_obs": "int64",
+        "method": "str",
+        "replications": "int64",
+        "failures": "int64",
+        "mean_regret": "float64",
+        "median_regret": "float64",
+        "p90_regret": "float64",
+        "mean_pop_ann_vol": "float64",
+        "mean_pop_ann_return": "float64",
+        "mean_hhi": "float64",
+        "mean_effective_n": "float64",
+        "mean_l1_to_oracle": "float64",
+        "weight_dispersion": "float64",
+        "mean_cov_rel_error_sample": "float64",
+        "mean_cov_rel_error_lw": "float64",
+        "mean_lw_alpha": "float64",
+        "max_weight": "float64"
+      }
+    },
+    "simulation_truth": {
+      "file": "tables/simulation_truth.csv",
+      "rows": 3,
+      "description": "SYNTHETIC: population moments per case and N (equations in simulation.py).",
+      "columns": {
+        "case": "int64",
+        "case_name": "str",
+        "n_assets": "int64",
+        "max_weight": "float64",
+        "mu_min": "float64",
+        "mu_max": "float64",
+        "vol_min": "float64",
+        "vol_max": "float64",
+        "offdiag_corr": "float64"
+      }
+    }
+  },
+  "run_id": "20261123T233332Z_default_a2d5acfe",
+  "preset": "core",
+  "synthetic": false,
+  "config": {
+    "run_name": "default",
+    "synthetic_label": false,
+    "data": {
+      "source": "french",
+      "cache_dir": "data/raw",
+      "processed_dir": "data/processed",
+      "start": "1985-01-01",
+      "end": "2025-12-31",
+      "expected_assets": 30,
+      "missing_policy": "error",
+      "large_return_threshold": 0.25,
+      "french": {
+        "industries_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/30_Industry_Portfolios_daily_CSV.zip",
+        "factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "definitions_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Siccodes30.zip",
+        "landing_page": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
+        "description_page": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library/det_30_ind_port.html",
+        "section": "Average Value Weighted Returns -- Daily",
+        "rf_column": "RF"
+      },
+      "csv": null,
+      "synthetic": null
+    },
+    "portfolio": {
+      "initial_nav": 1000000.0,
+      "lookback": 252,
+      "gamma": 5.0,
+      "horizon": 21,
+      "rho": 0.75,
+      "max_weight": 0.1,
+      "cost_bps": 10.0,
+      "rebalance": "month_end",
+      "execution_lag": 1
+    },
+    "solver": {
+      "order": [
+        "CLARABEL",
+        "OSQP",
+        "SCS"
+      ],
+      "feasibility_tol": 1e-06,
+      "psd_repair_rel_tol": 1e-10
+    },
+    "splits": {
+      "simulation_start": "1990-01-01",
+      "splits": [
+        {
+          "name": "development",
+          "start": "1990-01-01",
+          "end": "2004-12-31"
+        },
+        {
+          "name": "validation",
+          "start": "2005-01-01",
+          "end": "2014-12-31"
+        },
+        {
+          "name": "final",
+          "start": "2015-01-01",
+          "end": "2025-12-31"
+        }
+      ],
+      "headline": "final"
+    },
+    "experiments": {
+      "cost_bps": [
+        0.0,
+        5.0,
+        10.0,
+        25.0
+      ],
+      "lookback": [
+        126,
+        252,
+        504
+      ],
+      "rho": [
+        0.0,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "gamma": [
+        1.0,
+        5.0,
+        10.0
+      ],
+      "bootstrap": {
+        "block_length": 20,
+        "replications": 1000,
+        "seed": 20090301,
+        "confidence": 0.95,
+        "exploratory_block_lengths": [
+          10,
+          40
+        ]
+      },
+      "stress": {
+        "history": 1260,
+        "horizon": 63,
+        "block_length": 10,
+        "paths": 1000,
+        "seed": 6302025
+      },
+      "simulation": {
+        "base_seed": 1729,
+        "cap_multiple": 3.0,
+        "gamma": 5.0,
+        "horizon": 21,
+        "rho": 0.75,
+        "core": {
+          "n_assets": [
+            30
+          ],
+          "lengths": [
+            126,
+            252,
+            504
+          ],
+          "replications": 100
+        },
+        "full": {
+          "n_assets": [
+            10,
+            30,
+            60
+          ],
+          "lengths": [
+            126,
+            252,
+            504
+          ],
+          "replications": 200
+        }
+      },
+      "frontier_points": 15
+    },
+    "output_dir": "outputs",
+    "default_preset": "core"
+  },
+  "config_fingerprint": "a2d5acfe8d0894210e06afef0fff6597881292bb4584aa977478ac6f29cc8e0a",
+  "strategies": [
+    {
+      "id": "EQW",
+      "name": "Monthly 1/N",
+      "objective": "equal",
+      "mean_model": null,
+      "cov_model": null,
+      "cost_aware": false,
+      "description": "Target 1/N in every asset at each monthly signal; weights drift between executions; pays realized costs."
+    },
+    {
+      "id": "SAMPLE_MV",
+      "name": "Sample Markowitz",
+      "objective": "mv",
+      "mean_model": "sample",
+      "cov_model": "sample",
+      "cost_aware": false,
+      "description": "Constrained mean-variance with trailing sample means and empirical covariance; no planned-cost penalty."
+    },
+    {
+      "id": "COV_SHRINK_MV",
+      "name": "Covariance shrinkage MV",
+      "objective": "mv",
+      "mean_model": "sample",
+      "cov_model": "lw",
+      "cost_aware": false,
+      "description": "Sample means; Ledoit-Wolf (scaled-identity target) covariance; no planned-cost penalty."
+    },
+    {
+      "id": "MEAN_COV_SHRINK_MV",
+      "name": "Mean + covariance shrinkage MV",
+      "objective": "mv",
+      "mean_model": "shrunk",
+      "cov_model": "lw",
+      "cost_aware": false,
+      "description": "Means shrunk toward their cross-sectional average with fixed rho; Ledoit-Wolf covariance; no planned-cost penalty."
+    },
+    {
+      "id": "COST_AWARE_REG_MV",
+      "name": "Regularized cost-aware MV",
+      "objective": "mv",
+      "mean_model": "shrunk",
+      "cov_model": "lw",
+      "cost_aware": true,
+      "description": "Same forecasts as MEAN_COV_SHRINK_MV plus an L1 planned-trading-cost penalty kappa*||w - w_signal||_1 with kappa = one-way cost rate. The only method that anticipates costs."
+    },
+    {
+      "id": "LW_MINVAR",
+      "name": "Shrinkage minimum variance",
+      "objective": "minvar",
+      "mean_model": null,
+      "cov_model": "lw",
+      "cost_aware": false,
+      "description": "Minimum forecast variance with Ledoit-Wolf covariance; no return forecast and no cost penalty."
+    }
+  ],
+  "code": {
+    "git_commit": "724ae705d849babf7d2afdc82094752341a59027",
+    "git_dirty": false,
+    "note": null
+  },
+  "dependencies": {
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "cvxpy": "1.9.3",
+    "clarabel": "0.11.1",
+    "osqp": "1.1.3",
+    "scs": "3.3.2",
+    "pyarrow": "26.0.1",
+    "pydantic": "2.14.4",
+    "typer": "0.29.2",
+    "streamlit": "1.67.0",
+    "plotly": "7.1.0",
+    "matplotlib": "3.11.2",
+    "reportlab": "5.1.0"
+  },
+  "environment": {
+    "python": "3.12.16",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
+    "machine": "arm64",
+    "processor": "arm",
+    "cpu_count": 10
+  },
+  "seeds": {
+    "bootstrap": 20090301,
+    "stress": 6302025,
+    "simulation_base": 1729,
+    "synthetic_data": null
+  },
+  "timings": {
+    "data_validation": 0.253,
+    "design_freeze": 0.026,
+    "primary_backtest": 4.033,
+    "metrics": 0.052,
+    "sensitivity": 14.543,
+    "bootstrap": 0.193,
+    "stress_view": 0.024,
+    "frontier_snapshot": 0.037,
+    "simulation": 4.002,
+    "engine_total": 23.221,
+    "reports": 2.643,
+    "total": 26.4
+  },
+  "updated_utc": "2026-11-23T23:33:59+00:00",
+  "data": {
+    "provenance": {
+      "dataset": "Kenneth French Data Library: 30 Industry Portfolios (daily, value-weighted, including distributions); RF from Fama/French 3 Factors (daily)",
+      "landing_page": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
+      "description_page": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library/det_30_ind_port.html",
+      "universe_note": "Assets are the 30 Kenneth French value-weighted industry research portfolios (returns include distributions), not individual stocks or directly tradable ETFs.",
+      "vintage_note": "Current-vintage historical dataset: the provider reconstructs full return histories at each update and CRSP revisions can change past values. This is not a point-in-time (vintage) reconstruction. Beginning with the January 2025 release the provider builds US research returns from CRSP Flat File Format 2.0 (CIZ) instead of the discontinued legacy (FIZ) files; the provider highlights the change in how monthly returns are compounded (daily compounding with dividends reinvested on ex-dates). This project uses daily returns and does not quantify the transition's effect on this daily sample.",
+      "definitions_check": "matches provider Siccodes30.txt",
+      "files": [
+        {
+          "role": "industries_zip",
+          "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/30_Industry_Portfolios_daily_CSV.zip",
+          "filename": "30_Industry_Portfolios_daily_CSV.zip",
+          "retrieved_at_utc": "2026-11-21T05:38:16+00:00",
+          "retrieval": "downloaded",
+          "http_status": 200,
+          "bytes": 2599584,
+          "sha256": "e9278f00793c8b6d59f2ef6fd813af97d02ec601bfe8a835b111c6b65c1b24c6",
+          "member": "30_Industry_Portfolios_Daily.csv",
+          "selected_section": "Average Value Weighted Returns -- Daily",
+          "sections_in_file": [
+            "Average Value Weighted Returns -- Daily",
+            "Average Equal Weighted Returns -- Daily"
+          ],
+          "units_in_file": "percent per day",
+          "units_after_parse": "decimal simple return per day",
+          "provider_notes": [
+            "This file was created by CMPT_IND_RETS using the 202609 CRSP database.",
+            "It contains value- and equal-weighted returns for 30 industry portfolios.",
+            "The portfolios are constructed at the end of June.",
+            "Missing data are indicated by -99.99 or -999.",
+            "Average Value Weighted Returns -- Daily"
+          ],
+          "sentinels_converted": 0
+        },
+        {
+          "role": "factors_zip",
+          "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+          "filename": "F-F_Research_Data_Factors_daily_CSV.zip",
+          "retrieved_at_utc": "2026-11-21T05:38:16+00:00",
+          "retrieval": "downloaded",
+          "http_status": 200,
+          "bytes": 178326,
+          "sha256": "96c23b88e651cbfff3740a53f8225e59ee39893371e96385a1d8125ec2cd9c89",
+          "member": "F-F_Research_Data_Factors_daily.csv",
+          "selected_column": "RF",
+          "units_in_file": "percent per day",
+          "units_after_parse": "decimal simple return per day",
+          "provider_notes": [
+            "This file was created by using the 202609 CRSP database.",
+            "The Tbill return is the simple daily rate that, over the number of trading days",
+            "compounds to 1-month TBill rate. The 1-month TBill rate data until 202405 are from Ibbotson Associates. Starting from 202406, the 1-month TBill rate is from ICE BofA US 1-Month Treasury Bill Index."
+          ],
+          "sentinels_converted": 0
+        },
+        {
+          "role": "definitions_zip",
+          "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Siccodes30.zip",
+          "filename": "Siccodes30.zip",
+          "retrieved_at_utc": "2026-11-21T05:38:17+00:00",
+          "retrieval": "downloaded",
+          "http_status": 200,
+          "bytes": 9244,
+          "sha256": "eddab10956ef97c8e5cb867ddf5c89e8126e75ea5cb889b2607941c52a2b6272"
+        }
+      ],
+      "redistribution": "Raw provider files are cached locally and excluded from version control; reproduce them with `rpo fetch` and verify against the recorded SHA-256 values.",
+      "coverage": {
+        "first_date": "1985-01-02",
+        "last_date": "2025-12-31",
+        "n_dates": 10330,
+        "n_assets": 30,
+        "configured_start": "1985-01-01",
+        "configured_end": "2025-12-31"
+      }
+    },
+    "assets": {
+      "Food": "Food Products",
+      "Beer": "Beer & Liquor",
+      "Smoke": "Tobacco Products",
+      "Games": "Recreation",
+      "Books": "Printing and Publishing",
+      "Hshld": "Consumer Goods",
+      "Clths": "Apparel",
+      "Hlth": "Healthcare, Medical Equipment, Pharmaceutical Products",
+      "Chems": "Chemicals",
+      "Txtls": "Textiles",
+      "Cnstr": "Construction and Construction Materials",
+      "Steel": "Steel Works Etc",
+      "FabPr": "Fabricated Products and Machinery",
+      "ElcEq": "Electrical Equipment",
+      "Autos": "Automobiles and Trucks",
+      "Carry": "Aircraft, ships, and railroad equipment",
+      "Mines": "Precious Metals, Non-Metallic, and Industrial Metal Mining",
+      "Coal": "Coal",
+      "Oil": "Petroleum and Natural Gas",
+      "Util": "Utilities",
+      "Telcm": "Communication",
+      "Servs": "Personal and Business Services",
+      "BusEq": "Business Equipment",
+      "Paper": "Business Supplies and Shipping Containers",
+      "Trans": "Transportation",
+      "Whlsl": "Wholesale",
+      "Rtail": "Retail",
+      "Meals": "Restaurants, Hotels, Motels",
+      "Fin": "Banking, Insurance, Real Estate, Trading",
+      "Other": "Everything Else"
+    },
+    "synthetic": false,
+    "hashes": {
+      "industries_zip": "e9278f00793c8b6d59f2ef6fd813af97d02ec601bfe8a835b111c6b65c1b24c6",
+      "factors_zip": "96c23b88e651cbfff3740a53f8225e59ee39893371e96385a1d8125ec2cd9c89",
+      "definitions_zip": "eddab10956ef97c8e5cb867ddf5c89e8126e75ea5cb889b2607941c52a2b6272",
+      "processed_returns": "034753f6cf880b9e4ca1c583a7eea0878f09d5e3b7ddd7edf200144e27e50381",
+      "processed_rf": "6e0212c5043dd2eea8301cd774164fd9959dfcdc78d88adaa739239e4ee957c8"
+    }
+  },
+  "benchmark": {
+    "workload": "reproduce preset=core: primary backtest (6 strategies) + sweeps + bootstrap + stress + frontier + simulation",
+    "environment": {
+      "python": "3.12.16",
+      "platform": "macOS-15.7.7-arm64-arm-64bit",
+      "machine": "arm64",
+      "processor": "arm",
+      "cpu_count": 10
+    },
+    "wall_time_s_by_stage": {
+      "data_validation": 0.253,
+      "design_freeze": 0.026,
+      "primary_backtest": 4.033,
+      "metrics": 0.052,
+      "sensitivity": 14.543,
+      "bootstrap": 0.193,
+      "stress_view": 0.024,
+      "frontier_snapshot": 0.037,
+      "simulation": 4.002,
+      "engine_total": 23.221
+    },
+    "solver_calls_note": "targets of path-independent strategies are cached across sweep scenarios sharing the same inputs"
+  },
+  "completed_utc": "2026-11-23T23:33:59+00:00"
+}

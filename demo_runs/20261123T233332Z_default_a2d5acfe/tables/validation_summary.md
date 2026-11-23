@@ -1,0 +1,24 @@
+# Data validation summary
+
+- Dataset: Kenneth French Data Library: 30 Industry Portfolios (daily, value-weighted, including distributions); RF from Fama/French 3 Factors (daily)
+- Empirical data
+- Coverage: 1985-01-02 to 2025-12-31, 10330 dates x 30 assets
+- Checks: 17 total, 0 failed, 0 warnings
+- Large |returns| flagged (diagnostic only): 0
+  - asset_dates_unique: pass (0) 
+  - asset_dates_increasing: pass (True) 
+  - asset_ids_unique: pass (30) 
+  - expected_column_count: pass (30) expected 30
+  - excluded_after_end: info (187) observations after 2025-12-31 excluded
+  - excluded_before_start: info (15821) observations before 1985-01-01 excluded
+  - asset_dates_without_rf: pass (0) 
+  - rf_dates_without_assets: info (0) RF-only dates ignored
+  - non_finite_values: pass (0) 
+  - missing_values: pass (0) 
+  - returns_at_or_below_minus_100pct: pass (0) 
+  - large_abs_returns: info (0) |r| > 25%; diagnostics only, not deleted
+  - rf_min: info (0.0) decimal per day
+  - rf_max: info (0.0004) decimal per day
+  - first_date: info (1985-01-02) 
+  - last_date: info (2025-12-31) 
+  - n_dates: info (10330) 

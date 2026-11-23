@@ -1,0 +1,4 @@
+case,case_name,n_assets,max_weight,mu_min,mu_max,vol_min,vol_max,offdiag_corr
+1,equal_exchangeable,30,0.1,0.00025,0.00025,0.012,0.012,0.3
+2,equal_mean_hetero_risk,30,0.1,0.00025,0.00025,0.008,0.02,0.3
+3,hetero_mean_risk,30,0.1,5e-05,0.00045,0.008,0.02,0.3

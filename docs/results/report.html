@@ -7,7 +7,7 @@ h1{font-size:26px} h2{border-bottom:1px solid #ddd;padding-bottom:4px;margin-top
 .note{background:#F6F8FA;padding:10px 14px;border-left:3px solid #30638E;font-size:14px} code{background:#f3f3f3;padding:1px 4px}
 </style></head><body>
 <h1>Regularized Portfolio Optimization Engine: 1/N vs. Markowitz</h1>
-<p class="tag">Historical (academic industry portfolios) | Ken French 30 industry portfolios (value-weighted, daily) | final 2015-01-01 to 2025-12-31 | cost 10 bps/$ | monthly signal, next-close execution | run 20261121T072546Z_default_a2d5acfe</p>
+<p class="tag">Historical (academic industry portfolios) | Ken French 30 industry portfolios (value-weighted, daily) | final 2015-01-01 to 2025-12-31 | cost 10 bps/$ | monthly signal, next-close execution | run 20261123T233332Z_default_a2d5acfe</p>
 <h2>Findings from saved results</h2><ul><li>Final 2015-2025: net Sharpe EQW 0.55, SAMPLE_MV 0.66, COST_AWARE_REG_MV 0.63. 5 of 5 bootstrap intervals for the Sharpe difference vs 1/N include zero (COST_AWARE_REG_MV [-0.15, +0.30], SAMPLE_MV [-0.13, +0.31]), so these differences are not resolved.</li><li>The cost penalty cut recurring half-gross turnover from 1.92x to 0.88x per year relative to identical forecasts without it (fees 8.3% vs 3.8% of starting split NAV); net Sharpe 0.65 vs 0.63.</li><li>The point advantage depends on the lookback: SAMPLE_MV net Sharpe by window 126d 0.63, 252d 0.66, 504d 0.55 vs EQW 0.55 (prespecified one-at-a-time sweep, same split).</li><li>Ledoit-Wolf shrinkage was light (mean alpha 0.033) yet cut the median condition number by 37% (335 to 213); targets moved little (mean L1 distance 0.009 vs SAMPLE_MV), while mean shrinkage moved them far more (0.405).</li></ul>
 <p class='note'>Assets: Assets are the 30 Kenneth French value-weighted industry research portfolios (returns include distributions), not individual stocks or directly tradable ETFs. Costs are stylized reallocation costs between research portfolios, not execution-cost estimates. Weights and notional reallocations are hypothetical.</p>
 <h2>Metrics: development split</h2><table class="dataframe t">
@@ -408,4 +408,4 @@ h1{font-size:26px} h2{border-bottom:1px solid #ddd;padding-bottom:4px;margin-top
     </tr>
   </tbody>
 </table>
-<h2>Reproduce</h2><p><code>rpo reproduce --config configs/default.yaml --preset core</code> &nbsp; (this run: <code>20261121T072546Z_default_a2d5acfe</code>)</p></body></html>
+<h2>Reproduce</h2><p><code>rpo reproduce --config configs/default.yaml --preset core</code> &nbsp; (this run: <code>20261123T233332Z_default_a2d5acfe</code>)</p></body></html>

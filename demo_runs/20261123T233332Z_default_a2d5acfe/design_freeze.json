@@ -1,0 +1,218 @@
+{
+  "run_id": "20261123T233332Z_default_a2d5acfe",
+  "frozen_utc": "2026-11-23T23:33:33+00:00",
+  "statement": "Written before any backtest, metric, or final-period summary is computed in this run. The historical final period (2015-2025) was publicly available beforehand, so it is not claimed to be prospectively unseen.",
+  "preset": "core",
+  "config": {
+    "run_name": "default",
+    "synthetic_label": false,
+    "data": {
+      "source": "french",
+      "cache_dir": "data/raw",
+      "processed_dir": "data/processed",
+      "start": "1985-01-01",
+      "end": "2025-12-31",
+      "expected_assets": 30,
+      "missing_policy": "error",
+      "large_return_threshold": 0.25,
+      "french": {
+        "industries_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/30_Industry_Portfolios_daily_CSV.zip",
+        "factors_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip",
+        "definitions_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Siccodes30.zip",
+        "landing_page": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
+        "description_page": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library/det_30_ind_port.html",
+        "section": "Average Value Weighted Returns -- Daily",
+        "rf_column": "RF"
+      },
+      "csv": null,
+      "synthetic": null
+    },
+    "portfolio": {
+      "initial_nav": 1000000.0,
+      "lookback": 252,
+      "gamma": 5.0,
+      "horizon": 21,
+      "rho": 0.75,
+      "max_weight": 0.1,
+      "cost_bps": 10.0,
+      "rebalance": "month_end",
+      "execution_lag": 1
+    },
+    "solver": {
+      "order": [
+        "CLARABEL",
+        "OSQP",
+        "SCS"
+      ],
+      "feasibility_tol": 1e-06,
+      "psd_repair_rel_tol": 1e-10
+    },
+    "splits": {
+      "simulation_start": "1990-01-01",
+      "splits": [
+        {
+          "name": "development",
+          "start": "1990-01-01",
+          "end": "2004-12-31"
+        },
+        {
+          "name": "validation",
+          "start": "2005-01-01",
+          "end": "2014-12-31"
+        },
+        {
+          "name": "final",
+          "start": "2015-01-01",
+          "end": "2025-12-31"
+        }
+      ],
+      "headline": "final"
+    },
+    "experiments": {
+      "cost_bps": [
+        0.0,
+        5.0,
+        10.0,
+        25.0
+      ],
+      "lookback": [
+        126,
+        252,
+        504
+      ],
+      "rho": [
+        0.0,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "gamma": [
+        1.0,
+        5.0,
+        10.0
+      ],
+      "bootstrap": {
+        "block_length": 20,
+        "replications": 1000,
+        "seed": 20090301,
+        "confidence": 0.95,
+        "exploratory_block_lengths": [
+          10,
+          40
+        ]
+      },
+      "stress": {
+        "history": 1260,
+        "horizon": 63,
+        "block_length": 10,
+        "paths": 1000,
+        "seed": 6302025
+      },
+      "simulation": {
+        "base_seed": 1729,
+        "cap_multiple": 3.0,
+        "gamma": 5.0,
+        "horizon": 21,
+        "rho": 0.75,
+        "core": {
+          "n_assets": [
+            30
+          ],
+          "lengths": [
+            126,
+            252,
+            504
+          ],
+          "replications": 100
+        },
+        "full": {
+          "n_assets": [
+            10,
+            30,
+            60
+          ],
+          "lengths": [
+            126,
+            252,
+            504
+          ],
+          "replications": 200
+        }
+      },
+      "frontier_points": 15
+    },
+    "output_dir": "outputs",
+    "default_preset": "core"
+  },
+  "config_fingerprint": "a2d5acfe8d0894210e06afef0fff6597881292bb4584aa977478ac6f29cc8e0a",
+  "strategies": [
+    {
+      "id": "EQW",
+      "name": "Monthly 1/N",
+      "objective": "equal",
+      "mean_model": null,
+      "cov_model": null,
+      "cost_aware": false,
+      "description": "Target 1/N in every asset at each monthly signal; weights drift between executions; pays realized costs."
+    },
+    {
+      "id": "SAMPLE_MV",
+      "name": "Sample Markowitz",
+      "objective": "mv",
+      "mean_model": "sample",
+      "cov_model": "sample",
+      "cost_aware": false,
+      "description": "Constrained mean-variance with trailing sample means and empirical covariance; no planned-cost penalty."
+    },
+    {
+      "id": "COV_SHRINK_MV",
+      "name": "Covariance shrinkage MV",
+      "objective": "mv",
+      "mean_model": "sample",
+      "cov_model": "lw",
+      "cost_aware": false,
+      "description": "Sample means; Ledoit-Wolf (scaled-identity target) covariance; no planned-cost penalty."
+    },
+    {
+      "id": "MEAN_COV_SHRINK_MV",
+      "name": "Mean + covariance shrinkage MV",
+      "objective": "mv",
+      "mean_model": "shrunk",
+      "cov_model": "lw",
+      "cost_aware": false,
+      "description": "Means shrunk toward their cross-sectional average with fixed rho; Ledoit-Wolf covariance; no planned-cost penalty."
+    },
+    {
+      "id": "COST_AWARE_REG_MV",
+      "name": "Regularized cost-aware MV",
+      "objective": "mv",
+      "mean_model": "shrunk",
+      "cov_model": "lw",
+      "cost_aware": true,
+      "description": "Same forecasts as MEAN_COV_SHRINK_MV plus an L1 planned-trading-cost penalty kappa*||w - w_signal||_1 with kappa = one-way cost rate. The only method that anticipates costs."
+    },
+    {
+      "id": "LW_MINVAR",
+      "name": "Shrinkage minimum variance",
+      "objective": "minvar",
+      "mean_model": null,
+      "cov_model": "lw",
+      "cost_aware": false,
+      "description": "Minimum forecast variance with Ledoit-Wolf covariance; no return forecast and no cost penalty."
+    }
+  ],
+  "objective": "minimize (gamma/2)*H*w'Sigma w - H*mu'w + kappa*||w - w_signal||_1  s.t. sum(w)=1, 0<=w<=max_weight",
+  "code": {
+    "git_commit": "724ae705d849babf7d2afdc82094752341a59027",
+    "git_dirty": false,
+    "note": null
+  },
+  "data_hashes": {
+    "industries_zip": "e9278f00793c8b6d59f2ef6fd813af97d02ec601bfe8a835b111c6b65c1b24c6",
+    "factors_zip": "96c23b88e651cbfff3740a53f8225e59ee39893371e96385a1d8125ec2cd9c89",
+    "definitions_zip": "eddab10956ef97c8e5cb867ddf5c89e8126e75ea5cb889b2607941c52a2b6272",
+    "processed_returns": "034753f6cf880b9e4ca1c583a7eea0878f09d5e3b7ddd7edf200144e27e50381",
+    "processed_rf": "6e0212c5043dd2eea8301cd774164fd9959dfcdc78d88adaa739239e4ee957c8"
+  },
+  "synthetic": false
+}

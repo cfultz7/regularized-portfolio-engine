@@ -1,0 +1,244 @@
+{
+  "facts": {
+    "run_id": "20261123T233332Z_default_a2d5acfe",
+    "synthetic": false,
+    "headline_split": "final",
+    "split_dates": [
+      "2015-01-01",
+      "2025-12-31"
+    ],
+    "metrics": {
+      "EQW": {
+        "net_cagr": 0.10983254469214354,
+        "gross_cagr_before_fees": 0.11028348313205227,
+        "ann_vol": 0.1841423035972291,
+        "sharpe": 0.5509935319430098,
+        "max_drawdown": -0.3822422119687934,
+        "avg_effective_n": 29.964255052451005,
+        "recurring_half_turnover_ann": 0.2035642546854891,
+        "fees_pct_of_anchor_nav": 0.007957342002234913,
+        "avg_target_cap_hits": 0.0,
+        "solver_failures": 0
+      },
+      "SAMPLE_MV": {
+        "net_cagr": 0.13204781330394066,
+        "gross_cagr_before_fees": 0.13659687318375435,
+        "ann_vol": 0.18204042741951743,
+        "sharpe": 0.6643752597193966,
+        "max_drawdown": -0.3374744960460768,
+        "avg_effective_n": 10.200163394266067,
+        "recurring_half_turnover_ann": 2.0092576918167433,
+        "fees_pct_of_anchor_nav": 0.09031961056531337,
+        "avg_target_cap_hits": 9.340909090909092,
+        "solver_failures": 0
+      },
+      "COV_SHRINK_MV": {
+        "net_cagr": 0.13334359243685556,
+        "gross_cagr_before_fees": 0.13787330713149326,
+        "ann_vol": 0.1824057211826675,
+        "sharpe": 0.6696989133702728,
+        "max_drawdown": -0.3374744960582734,
+        "avg_effective_n": 10.229438688637815,
+        "recurring_half_turnover_ann": 1.9984501268376857,
+        "fees_pct_of_anchor_nav": 0.09009806818588391,
+        "avg_target_cap_hits": 9.318181818181818,
+        "solver_failures": 0
+      },
+      "MEAN_COV_SHRINK_MV": {
+        "net_cagr": 0.11858978666519104,
+        "gross_cagr_before_fees": 0.12287358003539905,
+        "ann_vol": 0.1628477251580724,
+        "sharpe": 0.6486479766619744,
+        "max_drawdown": -0.3278036128190157,
+        "avg_effective_n": 10.54311210152261,
+        "recurring_half_turnover_ann": 1.9150456680391936,
+        "fees_pct_of_anchor_nav": 0.08307887088088844,
+        "avg_target_cap_hits": 8.462121212121213,
+        "solver_failures": 0
+      },
+      "COST_AWARE_REG_MV": {
+        "net_cagr": 0.11679535908840322,
+        "gross_cagr_before_fees": 0.11876951522518464,
+        "ann_vol": 0.16436712605663648,
+        "sharpe": 0.6343724238035768,
+        "max_drawdown": -0.34334232298346823,
+        "avg_effective_n": 10.845992353998483,
+        "recurring_half_turnover_ann": 0.8849329978061552,
+        "fees_pct_of_anchor_nav": 0.038099973061895547,
+        "avg_target_cap_hits": 6.1893939393939394,
+        "solver_failures": 0
+      },
+      "LW_MINVAR": {
+        "net_cagr": 0.08551059239896919,
+        "gross_cagr_before_fees": 0.08705093369491923,
+        "ann_vol": 0.14512835550169187,
+        "sharpe": 0.5015672177930868,
+        "max_drawdown": -0.3164334909344856,
+        "avg_effective_n": 11.009818413700527,
+        "recurring_half_turnover_ann": 0.7105139996764416,
+        "fees_pct_of_anchor_nav": 0.02611974444809039,
+        "avg_target_cap_hits": 7.53030303030303,
+        "solver_failures": 0
+      }
+    },
+    "bootstrap": {
+      "COST_AWARE_REG_MV": {
+        "diff": 0.08337889186056702,
+        "lo": -0.15127548827377188,
+        "hi": 0.3043785766946242,
+        "excludes_zero": false
+      },
+      "COV_SHRINK_MV": {
+        "diff": 0.11870538142726295,
+        "lo": -0.12310987050235844,
+        "hi": 0.31460276449970753,
+        "excludes_zero": false
+      },
+      "LW_MINVAR": {
+        "diff": -0.049426314149923045,
+        "lo": -0.29775464364054094,
+        "hi": 0.1656667706250888,
+        "excludes_zero": false
+      },
+      "MEAN_COV_SHRINK_MV": {
+        "diff": 0.09765444471896456,
+        "lo": -0.12910584359573135,
+        "hi": 0.3084279750726215,
+        "excludes_zero": false
+      },
+      "SAMPLE_MV": {
+        "diff": 0.11338172777638678,
+        "lo": -0.12930992305997843,
+        "hi": 0.3121442732381919,
+        "excludes_zero": false
+      }
+    },
+    "bootstrap_settings": {
+      "block": 20,
+      "reps": 1000,
+      "level": 0.95
+    },
+    "lw_alpha_mean": 0.033078607659564434,
+    "lw_alpha_range": [
+      0.014085695607033863,
+      0.0907642810861016
+    ],
+    "cond_sample_median": 335.26860006904474,
+    "cond_lw_median": 212.6051333987803,
+    "mean_l1_sample_vs_covshrink": 0.008926572816020743,
+    "mean_l1_sample_vs_meancov": 0.4053385250633731,
+    "mean_l1_meancov_vs_costaware": 0.2863931552370522,
+    "n_signals": 433,
+    "n_solver_calls": 2165,
+    "n_failures": 0,
+    "n_pending": 6,
+    "n_executions": 2592,
+    "first_signal": "1989-12-29",
+    "last_signal": "2025-12-31",
+    "experiments": {
+      "data_validation": "completed",
+      "design_freeze": "completed",
+      "primary_backtest": "completed",
+      "metrics": "completed",
+      "sensitivity": "completed",
+      "bootstrap": "completed",
+      "stress_view": "completed",
+      "frontier_snapshot": "completed",
+      "simulation": "completed",
+      "reports": "running"
+    },
+    "timings": {
+      "data_validation": 0.253,
+      "design_freeze": 0.026,
+      "primary_backtest": 4.033,
+      "metrics": 0.052,
+      "sensitivity": 14.543,
+      "bootstrap": 0.193,
+      "stress_view": 0.024,
+      "frontier_snapshot": 0.037,
+      "simulation": 4.002,
+      "engine_total": 23.221
+    },
+    "cost_sweep_sharpe": {
+      "COST_AWARE_REG_MV": {
+        "0.0": 0.6721442511873008,
+        "5.0": 0.6446092684499527,
+        "10.0": 0.6343724238035768,
+        "25.0": 0.5950177868116885
+      },
+      "COV_SHRINK_MV": {
+        "0.0": 0.6915251131232135,
+        "5.0": 0.6806163890132754,
+        "10.0": 0.6696989133702728,
+        "25.0": 0.636897388126705
+      },
+      "EQW": {
+        "0.0": 0.5532021112486489,
+        "5.0": 0.5520978434398511,
+        "10.0": 0.5509935319430098,
+        "25.0": 0.5476803274120049
+      },
+      "LW_MINVAR": {
+        "0.0": 0.5114038656083763,
+        "5.0": 0.5064858326762641,
+        "10.0": 0.5015672177930868,
+        "25.0": 0.486808266608435
+      },
+      "MEAN_COV_SHRINK_MV": {
+        "0.0": 0.6721442511873008,
+        "5.0": 0.6604002471447146,
+        "10.0": 0.6486479766619744,
+        "25.0": 0.6133457497499608
+      },
+      "SAMPLE_MV": {
+        "0.0": 0.6863630770237975,
+        "5.0": 0.6753735707304731,
+        "10.0": 0.6643752597193966,
+        "25.0": 0.631330592076146
+      }
+    },
+    "lookback_sweep_sharpe": {
+      "COST_AWARE_REG_MV": {
+        "126": 0.643168169583411,
+        "252": 0.6343724238035768,
+        "504": 0.4980019751668483
+      },
+      "COV_SHRINK_MV": {
+        "126": 0.6337287350660221,
+        "252": 0.6696989133702728,
+        "504": 0.5472972155620954
+      },
+      "EQW": {
+        "126": 0.5509935319430098,
+        "252": 0.5509935319430098,
+        "504": 0.5509935319430098
+      },
+      "LW_MINVAR": {
+        "126": 0.47276407906418605,
+        "252": 0.5015672177930868,
+        "504": 0.4498528135948915
+      },
+      "MEAN_COV_SHRINK_MV": {
+        "126": 0.5702258913832458,
+        "252": 0.6486479766619744,
+        "504": 0.5276983485201048
+      },
+      "SAMPLE_MV": {
+        "126": 0.6288726642206183,
+        "252": 0.6643752597193966,
+        "504": 0.5459720732036675
+      }
+    },
+    "simulation": {
+      "cells": 9,
+      "replications": 100
+    }
+  },
+  "findings": [
+    "Final 2015-2025: net Sharpe EQW 0.55, SAMPLE_MV 0.66, COST_AWARE_REG_MV 0.63. 5 of 5 bootstrap intervals for the Sharpe difference vs 1/N include zero (COST_AWARE_REG_MV [-0.15, +0.30], SAMPLE_MV [-0.13, +0.31]), so these differences are not resolved.",
+    "The cost penalty cut recurring half-gross turnover from 1.92x to 0.88x per year relative to identical forecasts without it (fees 8.3% vs 3.8% of starting split NAV); net Sharpe 0.65 vs 0.63.",
+    "The point advantage depends on the lookback: SAMPLE_MV net Sharpe by window 126d 0.63, 252d 0.66, 504d 0.55 vs EQW 0.55 (prespecified one-at-a-time sweep, same split).",
+    "Ledoit-Wolf shrinkage was light (mean alpha 0.033) yet cut the median condition number by 37% (335 to 213); targets moved little (mean L1 distance 0.009 vs SAMPLE_MV), while mean shrinkage moved them far more (0.405)."
+  ],
+  "pdf_pages": 5
+}
